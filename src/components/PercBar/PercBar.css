@@ -1,0 +1,17 @@
+.PercBar {
+  width: 100%;
+  height: 10px;
+  background-color: lightcoral;
+}
+
+.PercBar__filled {
+  height: 100%;
+  background-color: red;
+}
+
+.PercBar--mp {
+  background-color: lightblue;
+}
+.PercBar--mp .PercBar__filled {
+  background-color: blue;
+}

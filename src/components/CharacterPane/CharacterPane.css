@@ -1,0 +1,11 @@
+.CharacterPane {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CharacterPane__teams {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}

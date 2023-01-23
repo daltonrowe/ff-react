@@ -1,0 +1,13 @@
+.CharacterList {
+  flex: 1 1 100%;
+}
+
+.CharacterList__name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.CharacterList__characters > div {
+  margin-bottom: 10px;
+}

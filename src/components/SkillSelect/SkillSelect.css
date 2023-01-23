@@ -1,0 +1,24 @@
+.SkillSelect {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  border-radius: 3px;
+  width: 200px;
+  min-height: 300px;
+}
+
+.SkillSelect__name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.SkillSelect__skill {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+}
