@@ -45,17 +45,14 @@ export const GameStore = createStore<GameState>()((set, get) => ({
     const findNextAlive = (): number => {
       let nextAliveIndex = 0;
 
-      for (let i = currentTurn + 1; i < turnOrder.length; ) {
+      for (let i = currentTurn + 1; i < turnOrder.length; i++) {
+        if (i > turnOrder.length) i = 0;
         const next = turnOrder[i];
 
-        if (next.currentStats.hp <= 0) {
-          i++;
-        } else {
+        if (next.currentStats.hp > 0) {
           nextAliveIndex = i;
           break;
         }
-
-        if (i > turnOrder.length) i = 0;
       }
 
       return nextAliveIndex;
