@@ -5,7 +5,7 @@ export const defaultSkills: CharacterSkill[] = [
   {
     id: "basic-attack",
     name: "Attack",
-    damage: 50,
+    damage: 200,
     mp: 0,
   },
 ];

@@ -10,11 +10,16 @@ export function TurnOrder() {
     <div className="TurnOrder">
       {turnOrder.map((character, index) => {
         const active = currentTurn === index;
+        const dead = turnOrder[index].currentStats.hp <= 0;
+
         return (
           <div
             className="TurnOrder__item"
             key={character.id}
-            style={{ backgroundColor: active ? "lightyellow" : "transparent" }}
+            style={{
+              backgroundColor: active ? "lightyellow" : "transparent",
+              display: dead ? "none" : "block",
+            }}
           >
             {character.name}
           </div>

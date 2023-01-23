@@ -5,6 +5,9 @@ import { useStore } from "zustand";
 import { SkillSelect } from "../SkillSelect/SkillSelect";
 
 function App() {
+  const { winner } = useStore(GameStore);
+  if (winner) return <div>Winner is {winner}</div>;
+
   return (
     <div className="App">
       <CharacterPane />

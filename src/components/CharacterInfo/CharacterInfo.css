@@ -14,3 +14,9 @@
 .CharacterInfo--selecting {
   background: lightblue;
 }
+
+.CharacterInfo--dead {
+  background: transparent;
+  opacity: 0.3;
+  cursor: not-allowed;
+}

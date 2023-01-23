@@ -4,8 +4,8 @@ import App from "@/components/App/App";
 import "./index.css";
 import { GameStore } from "./store/game";
 
-const { determineTurnOrder } = GameStore.getState();
-determineTurnOrder();
+const { updateTurnOrder } = GameStore.getState();
+updateTurnOrder();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

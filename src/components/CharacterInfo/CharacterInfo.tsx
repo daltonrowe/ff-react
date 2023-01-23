@@ -14,11 +14,12 @@ export function CharacterInfo(props: CharacterInfoProps) {
 
   const active =
     turnOrder[currentTurn] && turnOrder[currentTurn].id === character.id;
-
   const selectable = !active && queuedAction && queuedAction.target === null;
+  const dead = character.currentStats.hp <= 0;
+
   const className = `CharacterInfo ${active ? "CharacterInfo--active" : ""} ${
     selectable ? "CharacterInfo--selecting" : ""
-  }`;
+  } ${dead ? "CharacterInfo--dead" : ""}`;
 
   const handleSelect = () => {
     if (!selectable) return;

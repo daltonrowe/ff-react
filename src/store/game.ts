@@ -7,7 +7,7 @@ interface GameState {
   party: Character[];
   enemy: Character[];
   turnOrder: Character[];
-  determineTurnOrder: () => void;
+  updateTurnOrder: () => void;
   currentTurn: number;
   nextTurn: () => void;
   getCurrentCharacter: () => Character;
@@ -27,7 +27,7 @@ export const GameStore = createStore<GameState>()((set, get) => ({
   party: [...generateCharacters("party", 4)],
   enemy: [...generateCharacters("enemy", 4)],
   turnOrder: [],
-  determineTurnOrder: () => {
+  updateTurnOrder: () => {
     const { party, enemy } = get();
 
     const newTurnOrder = [...party, ...enemy];
@@ -40,9 +40,31 @@ export const GameStore = createStore<GameState>()((set, get) => ({
   },
   currentTurn: 0,
   nextTurn: () => {
-    const { currentTurn, turnOrder } = get();
-    const newTurn = currentTurn + 1;
-    set({ currentTurn: newTurn < turnOrder.length ? newTurn : 0 });
+    const { currentTurn, turnOrder, updateTurnOrder } = get();
+
+    const findNextAlive = (): number => {
+      let nextAliveIndex = 0;
+
+      for (let i = currentTurn + 1; i < turnOrder.length; ) {
+        const next = turnOrder[i];
+
+        if (next.currentStats.hp <= 0) {
+          i++;
+        } else {
+          nextAliveIndex = turnOrder.findIndex(
+            (character) => character.id === next.id
+          );
+          break;
+        }
+
+        if (i > turnOrder.length) i = 0;
+      }
+
+      return nextAliveIndex;
+    };
+
+    const newTurn = findNextAlive();
+    set({ currentTurn: newTurn });
   },
   getCurrentCharacter: (): Character => {
     const { currentTurn, turnOrder } = get();
@@ -66,19 +88,35 @@ export const GameStore = createStore<GameState>()((set, get) => ({
     executeAction();
   },
   executeAction: () => {
-    const { queuedAction, nextTurn, checkWinCondition, winner } = get();
+    const { queuedAction, nextTurn, checkWinCondition, turnOrder, winner } =
+      get();
     if (!queuedAction) return alert("No action queued!");
 
     const { target, skill } = queuedAction;
     if (!target) return alert("No target queued!");
 
-    target.currentStats.hp = target.currentStats.hp - skill.damage;
+    target.currentStats.hp = Math.max(0, target.currentStats.hp - skill.damage);
 
     checkWinCondition();
+
+    set({ queuedAction: null });
     if (!winner) nextTurn();
   },
   checkWinCondition: () => {
-    // check win condition
+    const { party, enemy } = get();
+
+    let partyHp = 0;
+    party.map((character) => {
+      partyHp += character.currentStats.hp;
+    });
+
+    let enemyHp = 0;
+    enemy.map((character) => {
+      enemyHp += character.currentStats.hp;
+    });
+
+    if (partyHp <= 0) set({ winner: "enemy" });
+    if (enemyHp <= 0) set({ winner: "party" });
   },
 }));
 
