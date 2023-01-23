@@ -51,9 +51,7 @@ export const GameStore = createStore<GameState>()((set, get) => ({
         if (next.currentStats.hp <= 0) {
           i++;
         } else {
-          nextAliveIndex = turnOrder.findIndex(
-            (character) => character.id === next.id
-          );
+          nextAliveIndex = i;
           break;
         }
 
